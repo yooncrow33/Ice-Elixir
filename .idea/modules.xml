@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/IceElixer.iml" filepath="$PROJECT_DIR$/IceElixer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IceElixir.iml" filepath="$PROJECT_DIR$/IceElixir.iml" />
     </modules>
   </component>
 </project>
