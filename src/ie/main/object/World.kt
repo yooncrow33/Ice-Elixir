@@ -1,11 +1,8 @@
-package ie.main.manager
+package ie.main.`object`
 
-class SideScrollManager {
+class World {
     val WORLD_WIDTH: Int = 19200
     val WORLD_HEIGHT: Int = 10800
-
-    val VIRTUAL_X_SCREEN_CENTER: Int = 960
-    val VIRTUAL_Y_SCREEN_CENTER: Int = 540
 
     val WORLD_HALF_WIDTH: Double = WORLD_WIDTH / 2.0
     val MIN_X: Double = -WORLD_HALF_WIDTH

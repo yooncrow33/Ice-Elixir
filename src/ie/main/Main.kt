@@ -1,5 +1,6 @@
 package ie.main
 
+import ie.main.graphics.BackGroundIce
 import ie.main.input.KetListener
 import scope.Base
 import java.awt.*
@@ -12,10 +13,16 @@ class Main(title : String,profileId : Int) : Base(title) {
     val console : Console by lazy { Console(scopeEngine(), this) }
     val ketListener  : KetListener = KetListener(this,this)
     val exitPopup : ExitPopup = ExitPopup()
+    val world : World = World()
+    var player : Player = Player(world)
 
     var pause = false;
 
     var pizza : Boolean = false
+
+    val backGroundIces = List(400) {
+        BackGroundIce()
+    }
 
     override fun init() {
 
@@ -30,6 +37,11 @@ class Main(title : String,profileId : Int) : Base(title) {
         if (pizza) {
             g2.rotate(Math.PI, 1920 / 2.0, 1080 / 2.0)
         }
+
+        for (i in backGroundIces) {
+            if (i.isVisibleToPlayer(player)) i.renderIce(g,player)
+        }
+
         gm.renderBackGround(g)
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
         g.color = Color(20,20,20)
