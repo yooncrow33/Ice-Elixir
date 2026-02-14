@@ -21,6 +21,38 @@ class KetListener(comp: JComponent, var main: Main) : KeyBindingBase(comp) {
         })
     }
 
+    override fun onKeyWPress() {
+        main.world.player.setTrueMoveUp()
+    }
+
+    override fun onKeyWRelease() {
+        main.world.player.setFalseMoveUp()
+    }
+
+    override fun onKeyAPress() {
+        main.world.player.setTrueMoveLeft()
+    }
+
+    override fun onKeyARelease() {
+        main.world.player.setFalseMoveLeft()
+    }
+
+    override fun onKeySPress() {
+        main.world.player.setTrueMoveDown()
+    }
+
+    override fun onKeySRelease() {
+        main.world.player.setFalseMoveDown()
+    }
+
+    override fun onKeyDPress() {
+        main.world.player.setTrueMoveRight()
+    }
+
+    override fun onKeyDRelease() {
+        main.world.player.setFalseMoveRight()
+    }
+
 
     override fun onKeyUPress() {
 

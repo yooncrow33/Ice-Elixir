@@ -97,8 +97,24 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
                 }
 
                  */
-            } else {
-                logs.add("[Console] Error: No found name")
+            } else if (target == "elixir") {
+                // 여기서 핵심! 인덱스별로 범위를 다르게 체크
+                val isValid = valueStr.toIntOrNull() in 0..100
+                if (isValid) {
+                    main.world.player.elixir = valueStr.toIntOrNull()!!
+                    logs.add("[System] $target set to $value")
+                } else {
+                    logs.add("[Console] Error: Value $value is out of range for $target")
+                }
+            }  else if (target == "hp") {
+                // 여기서 핵심! 인덱스별로 범위를 다르게 체크
+                val isValid = valueStr.toIntOrNull() in 0..100
+                if (isValid) {
+                    main.world.player.hp = valueStr.toIntOrNull()!!
+                    logs.add("[System] $target set to $value")
+                } else {
+                    logs.add("[Console] Error: Value $value is out of range for $target")
+                }
             }
 
         } else if (type == "bool") {
@@ -106,23 +122,23 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
             if (valueBool == null) { logs.add("[Console] Error: Not boolean value"); return}
 
             when (target) {
-                "screenchangeeffect" -> { main.getShutter().setScreenEffect(valueBool); logs.add("[System] $target set to $valueBool") }
+            "screenchangeeffect" -> { main.getShutter().setScreenEffect(valueBool); logs.add("[System] $target set to $valueBool") }
             }
 
-             */
-        }
+            */
+            }
     }
 
-    fun render(g: Graphics) {
+        fun render(g: Graphics) {
         if (!isOpen) return
         val g2 = g as Graphics2D
 
         // 1. 배경 (아주 어두운 네이비 반투명)
-        g2.setColor(Color(15, 25, 40, 230))
+        g2.setColor(Color(30, 30, 30, 245))
         g2.fillRect(0, 0, 1920, 340)
 
         // 2. 하단 구분선 (Ice Blue 포인트)
-        g2.setColor(Color(100, 210, 255))
+        g2.setColor(Color(190,190,190))
         g2.setStroke(BasicStroke(3f))
         g2.drawLine(0, 340, 1920, 340)
 
@@ -134,54 +150,54 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
         var lineCount = 0
 
         for (i in startIndex..<logs.size) {
-            val line = logs[i]
+        val line = logs[i]
 
-            // 컬러 코딩 변경
-            when {
-                line.contains("Error") -> g2.setColor(Color(255, 120, 120)) // 에러는 여전히 붉은계열이 좋음
-                line.contains("root:") -> g2.setColor(Color(200, 240, 255)) // Me: 연한 블루
-                line.contains("[System]") -> g2.setColor(Color(130, 255, 200)) // System: 민트/그린 계열
-                else -> g2.setColor(Color(160, 180, 200)) // Others: 블루 그레이
-            }
+        // 컬러 코딩 변경
+        when {
+        line.contains("Error") -> g2.setColor(Color(255, 30, 30)) // 에러는 여전히 붉은계열이 좋음
+        line.contains("root:") -> g2.setColor(Color(210, 210, 210)) // Me: 연한 블루
+        line.contains("[System]") -> g2.setColor(Color(40, 255, 20)) // System: 민트/그린 계열
+        else -> g2.setColor(Color(160, 160, 160)) // Others: 블루 그레이
+        }
 
-            g2.drawString(line, 30, startY + (lineCount * lineHeight))
-            lineCount++
+        g2.drawString(line, 30, startY + (lineCount * lineHeight))
+        lineCount++
         }
 
         // [Input Line]
-        g2.setColor(Color(100, 210, 255)) // 입력 프롬프트 Ice Blue
+        g2.setColor(Color(190,190,190)) // 입력 프롬프트 Ice Blue
         g2.setFont(Font("Consolas", Font.BOLD, 18))
         val cursor = if (System.currentTimeMillis() % 1000 > 300) "_" else ""
         g2.drawString("root@ie:~$ $buffer$cursor", 30, 320)
 
         // [Right Zone] 시스템 모니터
-        g2.setColor(Color(50, 70, 90)) // 구분선도 블루 그레이로
+        g2.color = Color(20,20,20) // 구분선도 블루 그레이로
         g2.drawLine(1500, 20, 1500, 320)
 
         g2.setFont(Font("Impact", Font.PLAIN, 24))
-        g2.setColor(Color(150, 220, 255)) // 헤더
+        g2.setColor(Color(220,220,220)) // 헤더
         g2.drawString("SYSTEM STATUS", 1520, 60)
 
         var y = 100
-        drawStat(g2, "FPS", "60 (Fixed)", Color(100, 255, 255), 1520, y)
+        drawStat(g2, "FPS", "60 (Fixed)", Color(140,140,140), 1520, y)
         y += 30
-        drawStat(g2, "MEMORY", "${scopeEngine.system().usedMemory}MB / ${scopeEngine.system().totalMemory}MB", Color(200, 230, 255), 1520, y)
+        drawStat(g2, "MEMORY", "${scopeEngine.system().usedMemory}MB / ${scopeEngine.system().totalMemory}MB", Color(140,140,140), 1520, y)
         y += 30
-        drawStat(g2, "THREADS", "${Thread.activeCount()} Active", Color(180, 200, 220), 1520, y)
+        drawStat(g2, "THREADS", "${Thread.activeCount()} Active", Color(140,140,140), 1520, y)
         y += 30
-        drawStat(g2, "CPU", "${scopeEngine.system().cpuPercentage}%", Color(130, 200, 255), 1520, y)
+        drawStat(g2, "CPU", "${scopeEngine.system().cpuPercentage}%", Color(140,140,140), 1520, y)
 
         // 하단 로고
-        g2.setColor(Color(40, 60, 80))
+        g2.setColor(Color(35, 35, 35))
         g2.setFont(Font("Impact", Font.ITALIC, 40))
         g2.drawString("IE CONSOLE", 1530, 300)
-    }
+        }
 
-    // 모니터링용 헬퍼 함수
-    private fun drawStat(g: Graphics2D, label: String?, value: String?, valColor: Color?, x: Int, y: Int) {
-        g.color = Color.GRAY
+        // 모니터링용 헬퍼 함수
+        private fun drawStat(g: Graphics2D, label: String?, value: String?, valColor: Color?, x: Int, y: Int) {
+        g.color = Color(160,160,160)
         g.drawString(label, x, y)
         g.color = valColor
         g.drawString(value, x + 120, y)
+        }
     }
-}

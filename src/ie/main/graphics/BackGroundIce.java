@@ -31,14 +31,14 @@ public class BackGroundIce {
         double relativeY = y - player.getY() + VIRTUAL_Y_SCREEN_CENTER;
 
         //g.setColor(new Color(135, 206, 255));
-        g.setColor(new Color(245,245,245));
-
-        g.fillRect((int)relativeX - iceWidth/2, (int)relativeY - iceHeight/2, iceWidth,iceHeight );
+        g.setColor(new Color(190,190,190));
+        g.fillRect((int)relativeX - iceWidth/2, (int)relativeY - iceHeight/2, iceWidth, iceHeight);
     }
 
     public boolean isVisibleToPlayer(Player player) {
         double relativeX = x - player.getX();
         double relativeY = y - player.getY();
+
 
         if (cullingDistanceWidth > relativeX) {
             if (-1.0 * cullingDistanceWidth < relativeX) {

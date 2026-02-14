@@ -11,4 +11,10 @@ class World {
     val WORLD_HALF_HEIGHT: Double = WORLD_HEIGHT / 2.0
     val MIN_Y: Double = -WORLD_HALF_HEIGHT
     val MAX_Y: Double = WORLD_HALF_HEIGHT
+
+    var player : Player = Player(this)
+
+    fun update(dt : Double) {
+        player.update(dt)
+    }
 }
