@@ -1,10 +1,10 @@
 package ie.launch;
 
-import scope.Base;
+import scope.EmptyBase;
 
 import java.awt.*;
 
-public class Launcher extends Base {
+public class Launcher extends EmptyBase {
 
     public Launcher() {
         super("IE Launcher");

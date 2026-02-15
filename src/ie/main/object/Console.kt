@@ -99,7 +99,7 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
                  */
             } else if (target == "elixir") {
                 // 여기서 핵심! 인덱스별로 범위를 다르게 체크
-                val isValid = valueStr.toIntOrNull() in 0..100
+                val isValid = valueStr.toIntOrNull() in 0..200
                 if (isValid) {
                     main.world.player.elixir = valueStr.toIntOrNull()!!
                     logs.add("[System] $target set to $value")
@@ -118,15 +118,15 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
             }
 
         } else if (type == "bool") {
-            /*val valueBool = valueStr.toBooleanStrictOrNull()
+            val valueBool = valueStr.toBooleanStrictOrNull()
             if (valueBool == null) { logs.add("[Console] Error: Not boolean value"); return}
 
             when (target) {
-            "screenchangeeffect" -> { main.getShutter().setScreenEffect(valueBool); logs.add("[System] $target set to $valueBool") }
+            "hitbox" -> { main.setHitboxRender(valueBool); logs.add("[System] $target set to $valueBool") }
             }
 
-            */
-            }
+
+        }
     }
 
         fun render(g: Graphics) {

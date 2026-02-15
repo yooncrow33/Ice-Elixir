@@ -27,6 +27,7 @@ class ExitPopup() {
     fun render(g: Graphics, message: String, title: String) {
         if (!this.isVisible) return
 
+
         // 1. 백그라운드 딤(Dimming) 효과 - 약간 푸른빛이 도는 어둠
         g.setColor(Color(10, 10, 10, 200))
         g.fillRect(-2000, -2000, 60000, 6000)
