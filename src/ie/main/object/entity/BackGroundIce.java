@@ -11,7 +11,7 @@ public class BackGroundIce extends Entity {
     final int iceHeight = 900;
 
     public BackGroundIce() {
-        super(10, // radius (배경이니까 일단 0)
+        super(100, // radius (배경이니까 일단 0)
                 new Random().nextDouble(19201) - 19200.0/2, // x
                 new Random().nextDouble(10801) - 10800.0/2, // y
                 false, // isCollisionEnabled (배경이니까 충돌 X)

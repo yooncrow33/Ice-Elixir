@@ -56,6 +56,7 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
         // if-else if 대신 when을 쓰면 줄 맞춤이 편해져요
         when (cmd) {
             "help" -> help.setVisible()
+            "kill" -> { logs.add("[System] ㅠㅠ"); main.kill()}
             "clear" -> logs.clear()
             "close" -> isOpen = false;
             "exit" -> {this.isOpen=false; main.exitPopup.setVisible()}
@@ -73,35 +74,20 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
     }
 
     private fun handleSet(args: List<String>) {
+        if (args.size < 4) {
+            logs.add("[Console] Error: Incomplete command.")
+            return
+        }
         val (_, type, target, valueStr) = args
         val value = valueStr.toIntOrNull() ?: 0
 
         if (type == "val") {
             if (target.startsWith("setting")) {
-                /*val num = target.replace("setting", "").toIntOrNull() ?: 0
-                if (num !in 1..<5) {
-                    logs.add("[Console] Error: No found setting")
-                    return;
-                }
-                // 여기서 핵심! 인덱스별로 범위를 다르게 체크
-                val isValid = when (num) {
-                    2 -> value in 0..4        // setting2는 상남자답게 0~4 허용
-                    1, 3, 4, 5 -> value in 0..2 // 나머지는 0~2만
-                    else -> false             // setting6 같은 건 바로 컷
-                }
-                if (isValid) {
-                    main.settingManager.setSettingIndex(num - 1, value)
-                    logs.add("[System] $target set to $value")
-                } else {
-                    logs.add("[Console] Error: Value $value is out of range for $target")
-                }
-
-                 */
             } else if (target == "elixir") {
                 // 여기서 핵심! 인덱스별로 범위를 다르게 체크
                 val isValid = valueStr.toIntOrNull() in 0..200
                 if (isValid) {
-                    main.world.player.elixir = valueStr.toIntOrNull()!!
+                    main.player.elixir = valueStr.toDoubleOrNull()!!
                     logs.add("[System] $target set to $value")
                 } else {
                     logs.add("[Console] Error: Value $value is out of range for $target")
@@ -110,7 +96,7 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
                 // 여기서 핵심! 인덱스별로 범위를 다르게 체크
                 val isValid = valueStr.toIntOrNull() in 0..100
                 if (isValid) {
-                    main.world.player.hp = valueStr.toIntOrNull()!!
+                    main.player.hp = valueStr.toDoubleOrNull()!!
                     logs.add("[System] $target set to $value")
                 } else {
                     logs.add("[Console] Error: Value $value is out of range for $target")
@@ -122,7 +108,8 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
             if (valueBool == null) { logs.add("[Console] Error: Not boolean value"); return}
 
             when (target) {
-            "hitbox" -> { main.setHitboxRender(valueBool); logs.add("[System] $target set to $valueBool") }
+                "hitbox" -> { main.setHitboxRender(valueBool); logs.add("[System] $target set to $valueBool") }
+                "antialiasing" -> { main.setAntiAliasing(valueBool); logs.add("[System] $target set to $valueBool") }
             }
 
 

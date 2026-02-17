@@ -5,16 +5,5 @@ class World {
     val WORLD_HEIGHT: Int = 10800
 
     val WORLD_HALF_WIDTH: Double = WORLD_WIDTH / 2.0
-    val MIN_X: Double = -WORLD_HALF_WIDTH
-    val MAN_X: Double = WORLD_HALF_WIDTH
-
     val WORLD_HALF_HEIGHT: Double = WORLD_HEIGHT / 2.0
-    val MIN_Y: Double = -WORLD_HALF_HEIGHT
-    val MAX_Y: Double = WORLD_HALF_HEIGHT
-
-    var player : Player = Player(this)
-
-    fun update(dt : Double) {
-        player.update(dt)
-    }
 }
