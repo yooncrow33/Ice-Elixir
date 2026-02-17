@@ -1,16 +1,23 @@
 package ie.main
 
 import ie.main.input.KetListener
-import ie.main.manager.*
-import ie.main.`object`.*
+import ie.main.input.MouseListener
+import ie.main.manager.GraphicsManager
+import ie.main.manager.OptionManager
+import ie.main.`object`.Console
+import ie.main.`object`.World
 import ie.main.`object`.entity.BackGroundIce
+import ie.main.`object`.entity.bullet.Bullet
+import ie.main.`object`.entity.enemy.Enemy
 import ie.main.`object`.entity.player.Player
-import ie.main.`object`.entity.player.graphics.Orbit
 import ie.main.`object`.entity.player.graphics.PlayerAfterImage
 import ie.main.view.IMouse
-import scope.SideScrollBase;
+import scope.SideScrollBase
+import scope.sideScroll.Entity
 import tss.main.`object`.ExitPopup
-import java.awt.*
+import java.awt.Graphics
+import java.awt.Graphics2D
+import java.awt.RenderingHints
 
 
 class Main(title : String,profileId : Int) : SideScrollBase(title,19200,10800), IMouse {
@@ -20,6 +27,8 @@ class Main(title : String,profileId : Int) : SideScrollBase(title,19200,10800), 
     lateinit var console: Console
     lateinit var exitPopup: ExitPopup
     lateinit var ketListener: KetListener
+    lateinit var optionManager: OptionManager
+    lateinit var mouseListener: MouseListener
     var deltaTime : Double = 0.0
     var fpsLimit = false
 
@@ -28,18 +37,22 @@ class Main(title : String,profileId : Int) : SideScrollBase(title,19200,10800), 
     var pizza : Boolean = false
     var antialiasing : Boolean = false
 
+    var enemies = ArrayList<Enemy>()
+
     override fun init() {
         world = World()
-        player = Player(world)
+        player = Player(this)
         gm = GraphicsManager()
         console = Console(scopeEngine(), this)
         exitPopup = ExitPopup()
         ketListener = KetListener(this, this)
+        optionManager = OptionManager()
+        mouseListener = MouseListener(this)
+        this.addMouseListener(mouseListener)
         for (i in 0..400) {
             addEntity(BackGroundIce())
         }
         addEntity(player)
-        addEntity(Orbit( this,player))
 
         launch()
     }
@@ -71,6 +84,10 @@ class Main(title : String,profileId : Int) : SideScrollBase(title,19200,10800), 
         if (gamePause) {
         gm.renderPauseScreen(g)
     }
+    }
+
+    fun addGameEntity(e : Entity) {
+        addEntity(e)
     }
 
     fun esc() {

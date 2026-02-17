@@ -17,13 +17,16 @@ public abstract class Bullet extends Entity {
     }
 
     public abstract void renderEntity(Graphics g, double x, double y);
+    public abstract void updateBullet(double dt);
     @Override
     public void render(Graphics g, double x, double y) {
         renderEntity(g,x,y);
     }
 
     @Override
-    public void update(double dt) {
+    public void update(double deltaTime) {
+        double dt = deltaTime / (16.0 / 1000.0);
+        if (isExpired()) {remove();}
         double distanceThisFrame = speed * dt; // dt는 Main.update의 시간 스케일 팩터
 
         // 삼각함수를 이용한 X, Y 이동량 계산
@@ -34,8 +37,7 @@ public abstract class Bullet extends Entity {
         y += deltaY;
 
         traveledDistance += distanceThisFrame; // 총 이동 거리 갱신
-
-        if (isExpired()) {remove();}
+        updateBullet(dt);
     }
 
     protected void removeBullet() {remove();}

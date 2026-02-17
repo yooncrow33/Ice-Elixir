@@ -1,11 +1,14 @@
 package ie.main.`object`.entity.player
 
 import ie.main.`object`.World
+import ie.main.Main;
+import ie.main.`object`.entity.player.graphics.Orbit
+import ie.main.`object`.weapon.Gun
 import scope.sideScroll.Entity
 import java.awt.Color
 import java.awt.Graphics
 
-class Player(val world: World) : Entity(15, 0.0,0.0,true,true,0,) {
+class Player(val main: Main) : Entity(15, 0.0,0.0,true,true,0,) {
     var moveUp: Boolean = false
     var moveLeft: Boolean = false
     var moveDown: Boolean = false
@@ -25,6 +28,16 @@ class Player(val world: World) : Entity(15, 0.0,0.0,true,true,0,) {
     var hp : Double = 100.0
     val maxHp = 100
 
+    var takeItem : Boolean = false;
+
+    val orbit : Orbit = Orbit(main,this)
+
+    var gun : Gun = Gun(main,this)
+
+
+    init {
+        main.addGameEntity(orbit)
+    }
 
     override fun update(delta : Double) {
         val dt : Double = delta / (16.0 / 1000.0)
@@ -33,7 +46,7 @@ class Player(val world: World) : Entity(15, 0.0,0.0,true,true,0,) {
         if (moveLeft) { addX(- PLAYER_MOVE_SPEED * dt) }
         if (moveRight) { addX(+ PLAYER_MOVE_SPEED * dt) }
 
-        if (elixir >= 200) {elixir = maxElixir.toDouble()} else { elixir += 0.1 }
+        if (elixir >= 200) {elixir = maxElixir.toDouble()} else { elixir += 0.3 }
         if (hp >= maxHp) {hp = maxHp.toDouble() } else { hp += 0.1 }
     }
 
@@ -42,9 +55,15 @@ class Player(val world: World) : Entity(15, 0.0,0.0,true,true,0,) {
         g.fillOval((x - PLAYER_WIDTH/2).toInt(), (y - PLAYER_HEIGHT/2).toInt(), PLAYER_WIDTH,PLAYER_HEIGHT)
     }
 
+    fun shot() {
+
+    }
+
     fun useWeapon() {
 
     }
+
+
 
     fun setTrueMoveUp() { moveUp = true }
     fun setTrueMoveLeft() { moveLeft = true }

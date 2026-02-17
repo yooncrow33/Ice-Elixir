@@ -21,6 +21,14 @@ class KetListener(comp: JComponent, var main: Main) : KeyBindingBase(comp) {
         })
     }
 
+    override fun onKeyFPress() {
+        main.player.takeItem = true
+    }
+
+    override fun onKeyFRelease() {
+        main.player.takeItem = false
+    }
+
     override fun onKeyWPress() {
         main.player.setTrueMoveUp()
     }

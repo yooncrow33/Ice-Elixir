@@ -1,5 +1,6 @@
 package ie.main.object.entity.player.graphics;
 
+import ie.main.object.entity.player.Player;
 import scope.sideScroll.Entity;
 import ie.main.view.IMouse;
 import java.awt.*;
@@ -7,19 +8,18 @@ import java.awt.geom.AffineTransform;
 
 public class Orbit extends Entity {
     private final IMouse iMouse;
-    private final Entity player;
+    private final Player player;
 
     // 계산된 결과값 (필드에 저장해서 어디서든 꺼내 씀)
     private double angle;
     private double distance;
 
     private final int AIM_HEIGHT = 7;
-    private final double COLOR_CHANGE_DISTANCE = 300;
 
     double renderX;
     double renderY;
 
-    public Orbit(IMouse iMouse, Entity player) {
+    public Orbit(IMouse iMouse, Player player) {
         // 반지름 0, 위치 0,0, 충돌 안함, 업데이트 함, 최상단 레이어 100
         super(0, 0, 0, false, true, 100);
         this.iMouse = iMouse;
@@ -64,7 +64,7 @@ public class Orbit extends Entity {
         final int START_OFFSET = player.getRadius() + 40;
 
         // 3. 조준선 그리기 (네 로직 그대로)
-        double normalLength = Math.min(this.distance, COLOR_CHANGE_DISTANCE) - START_OFFSET;
+        double normalLength = Math.min(this.distance, player.getGun().getMaxDistance()) - START_OFFSET;
 
         // A. 일반 사거리 (회색)
         if (normalLength > 0) {
@@ -73,10 +73,10 @@ public class Orbit extends Entity {
         }
 
         // B. 사거리 초과 (빨간색)
-        if (this.distance > COLOR_CHANGE_DISTANCE) {
-            double redLength = this.distance - COLOR_CHANGE_DISTANCE;
+        if (this.distance > player.getGun().getMaxDistance()) {
+            double redLength = this.distance - player.getGun().getMaxDistance();
             g2d.setColor(new Color(255, 0, 0, 128));
-            g2d.fillRect((int) COLOR_CHANGE_DISTANCE, -AIM_HEIGHT / 2, (int) Math.ceil(redLength), AIM_HEIGHT);
+            g2d.fillRect((int) player.getGun().getMaxDistance(), -AIM_HEIGHT / 2, (int) Math.ceil(redLength), AIM_HEIGHT);
         }
 
         g2d.setTransform(oldTransform);
