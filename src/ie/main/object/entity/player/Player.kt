@@ -17,7 +17,7 @@ class Player(val main: Main) : Entity(15, 0.0,0.0,true,true,0,) {
     val PLAYER_WIDTH: Int = 30
     val PLAYER_HEIGHT: Int = 30
 
-    val PLAYER_MOVE_SPEED: Int = 10
+    var PLAYER_MOVE_SPEED: Int = 10
 
     val weaponDistance: IntArray = intArrayOf(120, 200, 400, 600)
     var weapon: Int = 0
@@ -61,6 +61,10 @@ class Player(val main: Main) : Entity(15, 0.0,0.0,true,true,0,) {
 
     fun useWeapon() {
 
+    }
+
+    fun addElixir(value : Double) {
+        elixir += value
     }
 
 

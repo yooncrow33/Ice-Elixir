@@ -1,7 +1,7 @@
 package ie.main.object.entity.bullet;
 
-import ie.main.object.entity.enemy.Enemy;
-import scope.sideScroll.Entity;
+import ie.main.object.entity.bullet.base.PlayerBullet;
+import ie.main.object.entity.enemy.base.Enemy;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class Fire extends PlayerBullet {
     final Color color = new Color(255,50,30);
     public Fire(int radius, double x, double y, int layer, double angle, double speed,double maxDistance,int damage, ArrayList<Enemy> targets) {
         super(radius, x, y, layer, angle, speed, maxDistance, damage, targets);
-        System.out.println("new Fire!");
+        //System.out.println("new Fire!");
         this.size = radius*2;
         this.halfSize =size/2;
     }

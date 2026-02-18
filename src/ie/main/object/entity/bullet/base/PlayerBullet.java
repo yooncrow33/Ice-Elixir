@@ -1,11 +1,8 @@
-package ie.main.object.entity.bullet;
+package ie.main.object.entity.bullet.base;
 
-import com.sun.security.auth.module.LdapLoginModule;
-import ie.main.object.entity.enemy.Enemy;
-import ie.main.object.entity.player.Player;
+import ie.main.object.entity.enemy.base.Enemy;
 import scope.sideScroll.Entity;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class PlayerBullet extends Bullet {
@@ -23,7 +20,7 @@ public abstract class PlayerBullet extends Bullet {
             Enemy e = targets.get(i);
              if (isColliding(this,e)) {
                 e.takeDamage(damage);
-                break;
+               // break;
             }
         }
     }

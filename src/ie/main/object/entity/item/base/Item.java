@@ -1,30 +1,29 @@
-package ie.main.object.entity.item;
+package ie.main.object.entity.item.base;
 
-import ie.main.manager.OptionManager;
-import ie.main.object.entity.player.Player;
+import ie.main.object.entity.enemy.base.EnemyConfig;
 import scope.sideScroll.Entity;
 
 public abstract class Item extends Entity {
-    private final double itemTakeOffset = 30;
+    private final double itemTakeOffset = 60;
     private int tick = 0;
-    final ItemConfig itemConfig;
-    public Item( double x, double y, ItemConfig itemConfig) {
-        super(10, x, y, false,true, -10);
-        this.itemConfig = itemConfig;
+    final EnemyConfig enemyConfig;
+    public Item(double x, double y, EnemyConfig enemyConfig) {
+        super(5, x, y, false,true, -10);
+        this.enemyConfig = enemyConfig;
     }
 
     @Override
     public void update(double dt) {
-        if (!isColliding(this, itemConfig.getPlayer())) return;
+        if (!isColliding(this, enemyConfig.getPlayer())) return;
 
-        boolean canCollect = itemConfig.getOptionManager().isAutoCollect()
-                || itemConfig.getPlayer().getTakeItem();
+        boolean canCollect = enemyConfig.getOptionManager().isAutoCollect()
+                || enemyConfig.getPlayer().getTakeItem();
 
         if (canCollect) {
             takeItem();
             remove();
         }
-        if (itemConfig.getLife() <= tick) {remove();}
+        if (enemyConfig.getLife() <= tick) {remove();}
         tick ++;
     }
 

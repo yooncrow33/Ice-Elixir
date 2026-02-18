@@ -1,4 +1,4 @@
-package ie.main.object.entity.bullet;
+package ie.main.object.entity.bullet.base;
 
 import scope.sideScroll.Entity;
 

@@ -56,14 +56,11 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
         // if-else if 대신 when을 쓰면 줄 맞춤이 편해져요
         when (cmd) {
             "help" -> help.setVisible()
-            "kill" -> { logs.add("[System] ㅠㅠ"); main.kill()}
+            "kill" -> { logs.add("[System] kill Thread."); main.kill()}
             "clear" -> logs.clear()
             "close" -> isOpen = false;
             "exit" -> {this.isOpen=false; main.exitPopup.setVisible()}
-            "pizza" -> {
-                main.pizza = !main.pizza // if-else 대신 반전(!) 하나로 끝
-                logs.add("[System] Is very good.")
-            }
+            "pizza" -> { main.optionManager.isPizza = !main.optionManager.isPizza; logs.add("[System] Is very good.") }
             "set" -> {
                 if (args.size == 4) handleSet(args)
                 else logs.add("[Console] Usage: set [type] [name] [value]")
@@ -101,6 +98,15 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
                 } else {
                     logs.add("[Console] Error: Value $value is out of range for $target")
                 }
+            }  else if (target == "speed") {
+                // 여기서 핵심! 인덱스별로 범위를 다르게 체크
+                val isValid = true
+                if (isValid) {
+                    main.player.PLAYER_MOVE_SPEED = valueStr.toIntOrNull()!!
+                    logs.add("[System] $target set to $value")
+                } else {
+                    logs.add("[Console] Error: Value $value is out of range for $target")
+                }
             }
 
         } else if (type == "bool") {
@@ -109,10 +115,8 @@ class Console(var scopeEngine: ScopeEngineAccess, var main: Main) {
 
             when (target) {
                 "hitbox" -> { main.setHitboxRender(valueBool); logs.add("[System] $target set to $valueBool") }
-                "antialiasing" -> { main.setAntiAliasing(valueBool); logs.add("[System] $target set to $valueBool") }
+                "antialiasing" -> { main.optionManager.isAntialiasing = valueBool; logs.add("[System] $target set to $valueBool") }
             }
-
-
         }
     }
 
