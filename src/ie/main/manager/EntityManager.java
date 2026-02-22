@@ -24,7 +24,7 @@ public class EntityManager implements IItem {
     int minionCool = 0;
     public EntityManager(Main main) {
         this.main = main;
-        minionConfig = new EnemyConfig(60, 5, 200, 4, "minion",main.player, main.optionManager, this,120*60);
+        minionConfig = new EnemyConfig(60, 5, 200, 2, "minion",main.player, main.optionManager, this,120*60);
     }
 
     public void update() {

@@ -127,6 +127,6 @@ class GraphicsManager {
 
     fun renderPauseScreen (g : Graphics) {
         g.color = Color(80,80,80, 170)
-        g.fillRect(-Int.MAX_VALUE/2, -Int.MAX_VALUE/2, Int.MAX_VALUE, Int.MAX_VALUE)
+        g.fillRect(-50000, -50000, 100000, 100000)
     }
 }

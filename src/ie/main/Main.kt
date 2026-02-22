@@ -20,7 +20,7 @@ import java.awt.Graphics2D
 import java.awt.RenderingHints
 
 
-class Main(title : String,profileId : Int) : SideScrollBase(title,19200,10800), IMouse {
+class Main(profileId : Int) : SideScrollBase("ie dev",19200,10800), IMouse {
     lateinit var gm: GraphicsManager
     lateinit var world: World
     lateinit var player: Player
@@ -68,18 +68,20 @@ class Main(title : String,profileId : Int) : SideScrollBase(title,19200,10800), 
     }
 
     override fun render(g : Graphics) {
-        gm?.renderMap(g,world,player)
+        gm.renderMap(g,world,player)
 
-        console.render(g)
-
-        exitPopup.render(g,"EXIT THE GAME", "ARE YOU SURE?")
+        exitPopup.render(g,"ARE YOU SURE?", "EXIT THE GAME")
 
         //hud test
         gm.renderHud(g,0,1000, player);
 
         if (gamePause) {
         gm.renderPauseScreen(g)
-    }
+        }
+        //println(gamePause)
+
+        console.render(g)
+
     }
 
     fun addGameEntity(e : Entity) {
@@ -103,7 +105,7 @@ class Main(title : String,profileId : Int) : SideScrollBase(title,19200,10800), 
     fun kill() {super.exit()}
 }
 fun main() {
-    Main("ie dev",1)
+    Main(1)
 }
 //어떻게 작동하는지는 모른다..
 //어쩄든 기적적으로 작동한다.

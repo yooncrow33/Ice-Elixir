@@ -74,7 +74,7 @@ public class LoadingScreen {
                     timer.stop();
                     splash.dispose();
                     // 드디어 본선 경기(Main) 진출!
-                    new Main("IE dev", profileId);
+                    new Main(profileId);
                 }
             }
         });
